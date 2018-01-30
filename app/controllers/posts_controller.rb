@@ -1,21 +1,27 @@
 class PostsController < ApplicationController
+  before_action :facebook, only: [:index, :user_posts]
   require 'koala'
+  require 'json'
+  require 'date'
 
   def home
 
   end
 
   def index
-    @graph = Koala::Facebook::API.new('EAAEsRUgaygUBAONIjjpXAR73KoRAzTDEBeZAxZAa0bzD4OaC6sct4X2AoEtRhe8UvbaBqUpDNl84M7Ofi9iJhYKAOrwNbRp1slyeF74R7gG2P1m9YprQDRBkdLSeebQu3OSWFMyCUtNrv0kENSraX10tHZAj59U7BqCo9vJGZA30tKgbNZAi4S3n5S0cttYIZD')
-
-    @user = @graph.get_connection('me', 'posts', {
-        limit: 5,
-        fields: ['message', 'id']})
-
-    @group = @graph.get_object('14117761406?fields=feed.limit(10)')
-    json = @group.to_json
-    @object = JSON.parse(json, object_class: OpenStruct)["story"]
 
   end
+
+  def user_posts
+
+  end
+
+
+  def facebook
+    @graph = Koala::Facebook::API.new('EAAEsRUgaygUBAOk05gzTKzjwmIWZAWh6nkZAi661cwKYM7QCZCANLJq2KVQ12tjVVRvrvZBsvGA4iTZBjZCIshcGA9ZCRMy83EClkrWRSm9NxSVEv3Riucld134WQbKZCZChFtiKgHNtlo58PuonUGXaPJIRIGINYxQvgyrzQ81q9psVUBBdTvVVkXyVAm4aSZB38ZD')
+
+    @post = @graph.get_connection(14117761406, 'feed', {limit: 5, fields: ['message', 'updated_time', 'full_picture', 'from {name}', 'id', 'comments {message, from, id}']})
+  end
+
 
 end

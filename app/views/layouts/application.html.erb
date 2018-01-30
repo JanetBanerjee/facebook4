@@ -7,17 +7,19 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
-<div class="container">
+<%= render 'shared/nav' %>
+<div class="container-fluid">
   <div class="row">
-    <%= render 'shared/nav' %>
-    <div class="main_body">
-      <div class="col-md-2 sidebar">
-        <h2>Here is the sidebar</h2>
-      </div>
-      <div class="col-md-10 main">
-        <%= yield %>
+    <div class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <h2>Here is the sidebar</h2>
+        </ul>
       </div>
     </div>
+    <main role="main" class="feed col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+      <%= yield %>
+    </main>
   </div>
 </div>
 </body>

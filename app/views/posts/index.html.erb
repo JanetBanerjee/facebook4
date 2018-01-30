@@ -1,46 +1,45 @@
-
-<%= @graph.get_connection('me', 'posts', {
-    limit: 5,
-    fields: ['message', 'id']}) %>
-<br>
-
-<% @user.each do |post| %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-        </h3>
-      </div>
-      <div class="panel-body">
-        <%= post['message'] %>
-      </div>
-      <div class="panel-footer">
-        <div style="float:right">
-          <%= post['created_time'] %>
-        </div>
+<% @post.each do |post| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <%= post['from']['name'] %>
+        <%= post['from']['id'] %>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <%= post['message'] %>
+    </div>
+    <div class="panel-body">
+      <div align="center">
+        <img src=<%= post['full_picture'] %>>
       </div>
     </div>
-<% end %>
-</tbody>
-
-
-
-<br>
-<%= @graph.get_object('14117761406?fields=feed.limit(10)') %>
-
-<% @group.each do |post| %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-        </h3>
-      </div>
-      <div class="panel-body">
-        <%= post['message'] %>
-      </div>
-      <div class="panel-footer">
-        <div style="float:right">
-          <%= post['created_time'] %>
-        </div>
+    <div class="panel-footer">
+      <div align="right">
+        <% uploaded = post['updated_time'] %>
+        <%= Date.parse(uploaded).strftime("%b %e, %H:%M:%S") %>
       </div>
     </div>
+
+    <div class="panel-body">
+      <% reply = post['comments'] %>
+      <% parse = JSON.generate(reply) %>
+      <% parsed = JSON.parse(parse) %>
+      <% if parsed.nil? %>
+          <%= "no posts yet!" %>
+      <% else %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= pp parsed["data"][0]["from"]["name"] %>
+              </p>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <%= pp parsed["data"][0]["message"] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>
-</tbody>

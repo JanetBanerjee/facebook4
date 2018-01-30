@@ -15,6 +15,10 @@
               <%= link_to "All", posts_path %>
             </li>
             <li>
+              <%= link_to "My Posts", user_posts_path %>
+            </li>
+            </li>
+            <li>
               <%= link_to "Logout", destroy_user_session_path, method: :delete %>
             </li>
           </ul>
